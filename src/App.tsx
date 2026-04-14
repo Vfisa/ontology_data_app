@@ -9,7 +9,6 @@ import {
   WelcomeModal,
   AboutModal,
   HelpModal,
-  DataSourcesModal,
   ImportExportModal,
   GalleryModal,
   OntologySummaryModal,
@@ -27,7 +26,7 @@ import { useRoute } from './hooks/useRoute';
 import { navigate } from './lib/router';
 import { decodeSharePayload } from './lib/shareCodec';
 import type { Catalogue } from './types/catalogue';
-import { Search, MessageSquare, Info, LayoutGrid, PenTool, BookOpen, FileJson, HelpCircle, Database, Sun, Moon, FileText } from 'lucide-react';
+import { Search, MessageSquare, Info, LayoutGrid, PenTool, BookOpen, FileJson, HelpCircle, Sun, Moon, FileText } from 'lucide-react';
 import './styles/app.css';
 
 const AI_BUILDER_ENABLED = import.meta.env.VITE_ENABLE_AI_BUILDER === 'true';
@@ -43,7 +42,6 @@ function App() {
   const [showTour, setShowTour] = useState(() => !isTourDismissed());
   const [showAbout, setShowAbout] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const [showDataSources, setShowDataSources] = useState(false);
   const [showImportExport, setShowImportExport] = useState(false);
   const [showNLBuilder, setShowNLBuilder] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
@@ -148,7 +146,6 @@ function App() {
     { id: 'summary', label: 'View Summary', icon: <FileText size={18} />, action: () => setShowSummary(true) },
     { id: 'about', label: 'About & Trademark Notice', icon: <Info size={18} />, action: () => setShowAbout(true) },
     { id: 'help', label: 'Help', icon: <HelpCircle size={18} />, shortcut: '?', action: () => setShowHelp(true) },
-    { id: 'data-sources', label: 'Data Sources', icon: <Database size={18} />, action: () => setShowDataSources(true) },
     { id: 'theme', label: darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode', icon: darkMode ? <Sun size={18} /> : <Moon size={18} />, action: toggleDarkMode },
   ], [darkMode, openGallery, openDesigner, openLearn, toggleDarkMode]);
 
@@ -164,8 +161,7 @@ function App() {
     <div className={`app-container ${darkMode ? '' : 'light-theme'}`}>
       <Header 
         onAboutClick={() => setShowAbout(true)}
-        onHelpClick={() => setShowHelp(true)} 
-        onDataSourcesClick={() => setShowDataSources(true)}
+        onHelpClick={() => setShowHelp(true)}
         onImportExportClick={() => setShowImportExport(true)}
         onGalleryClick={openGallery}
         onDesignerClick={openDesigner}
@@ -221,10 +217,6 @@ function App() {
 
       <AnimatePresence>
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {showDataSources && <DataSourcesModal onClose={() => setShowDataSources(false)} />}
       </AnimatePresence>
 
       <AnimatePresence>
