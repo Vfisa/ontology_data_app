@@ -14,11 +14,9 @@ interface HeaderProps {
 }
 
 export function Header({ onAboutClick, onHelpClick, onImportExportClick, onGalleryClick, onDesignerClick, onLearnClick, onNLBuilderClick, onSummaryClick }: HeaderProps) {
-  const { darkMode, toggleDarkMode, currentOntology } = useAppStore();
+  const { darkMode, toggleDarkMode } = useAppStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const ontologyDisplayName = currentOntology.name || 'Untitled Ontology';
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -48,7 +46,6 @@ export function Header({ onAboutClick, onHelpClick, onImportExportClick, onGalle
           <span className="header-title">
             Ontology Playground <span className="header-title-preview">(Preview)</span>
           </span>
-          <span className="header-context">{ontologyDisplayName}</span>
         </div>
       </div>
 

@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Download, AlertTriangle, CheckCircle, Upload, Github, FilePlus, Undo2, Redo2 } from 'lucide-react';
+import { Download, AlertTriangle, CheckCircle, Upload, FilePlus, Undo2, Redo2 } from 'lucide-react';
 import { useDesignerStore } from '../../store/designerStore';
 import type { ValidationError } from '../../store/designerStore';
 import { useAppStore } from '../../store/appStore';
 import { serializeToRDF } from '../../lib/rdf/serializer';
 import { navigate } from '../../lib/router';
-import { SubmitCatalogueModal } from './SubmitCatalogueModal';
 
 /**
  * Toolbar buttons — rendered in the designer topbar.
@@ -13,7 +12,6 @@ import { SubmitCatalogueModal } from './SubmitCatalogueModal';
 export function DesignerToolbar() {
   const { ontology, validate, resetDraft, undo, redo, _past, _future } = useDesignerStore();
   const loadOntology = useAppStore((s) => s.loadOntology);
-  const [showSubmitModal, setShowSubmitModal] = useState(false);
   const canUndo = _past.length > 0;
   const canRedo = _future.length > 0;
 
@@ -50,44 +48,29 @@ export function DesignerToolbar() {
     resetDraft();
   };
 
-  const handleSubmitToCatalogue = () => {
-    const errors = validate();
-    if (errors.length > 0) return;
-    setShowSubmitModal(true);
-  };
-
   return (
-    <>
-      <div className="designer-toolbar">
-        <button className="designer-toolbar-btn" onClick={undo} disabled={!canUndo} title="Undo (Ctrl+Z)">
-          <Undo2 size={14} />
-        </button>
-        <button className="designer-toolbar-btn" onClick={redo} disabled={!canRedo} title="Redo (Ctrl+Shift+Z)">
-          <Redo2 size={14} />
-        </button>
-        <div className="designer-toolbar-sep" />
-        <button className="designer-toolbar-btn" onClick={handleNewOntology} title="New ontology">
-          <FilePlus size={14} /> New
-        </button>
-        <button className="designer-toolbar-btn" onClick={handleValidate} title="Validate ontology">
-          <CheckCircle size={14} /> Validate
-        </button>
-        <div className="designer-toolbar-sep" />
-        <button className="designer-toolbar-btn" onClick={handleExportRDF} title="Export RDF">
-          <Download size={14} /> Export RDF
-        </button>
-        <button className="designer-toolbar-btn" onClick={handleLoadInPlayground} title="Load in Playground">
-          <Upload size={14} /> Load in Playground
-        </button>
-        <button className="designer-toolbar-btn submit" onClick={handleSubmitToCatalogue} title="Submit to community catalogue">
-          <Github size={14} /> Submit to Catalogue
-        </button>
-      </div>
-
-      {showSubmitModal && (
-        <SubmitCatalogueModal onClose={() => setShowSubmitModal(false)} />
-      )}
-    </>
+    <div className="designer-toolbar">
+      <button className="designer-toolbar-btn" onClick={undo} disabled={!canUndo} title="Undo (Ctrl+Z)">
+        <Undo2 size={14} />
+      </button>
+      <button className="designer-toolbar-btn" onClick={redo} disabled={!canRedo} title="Redo (Ctrl+Shift+Z)">
+        <Redo2 size={14} />
+      </button>
+      <div className="designer-toolbar-sep" />
+      <button className="designer-toolbar-btn" onClick={handleNewOntology} title="New ontology">
+        <FilePlus size={14} /> New
+      </button>
+      <button className="designer-toolbar-btn" onClick={handleValidate} title="Validate ontology">
+        <CheckCircle size={14} /> Validate
+      </button>
+      <div className="designer-toolbar-sep" />
+      <button className="designer-toolbar-btn" onClick={handleExportRDF} title="Export RDF">
+        <Download size={14} /> Export RDF
+      </button>
+      <button className="designer-toolbar-btn" onClick={handleLoadInPlayground} title="Load in Playground">
+        <Upload size={14} /> Load in Playground
+      </button>
+    </div>
   );
 }
 

@@ -31,7 +31,7 @@ const tourSteps: TourStep[] = [
   {
     target: '.header-actions [data-tooltip="Designer"]',
     title: 'Ontology Designer',
-    description: 'Build your own ontologies from scratch or start from a template. Export as RDF or submit to the community catalogue.',
+    description: 'Build your own ontologies from scratch or start from a template. Export as RDF to use in your projects.',
     placement: 'bottom',
   },
 ];
