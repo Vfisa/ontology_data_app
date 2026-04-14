@@ -16,14 +16,14 @@ export interface ValidationError {
   relationshipId?: string;
 }
 
-// ─── Fabric IQ naming rules ─────────────────────────────────────────────────
+// ─── Naming rules ───────────────────────────────────────────────────────────
 // 1–26 chars, alphanumeric + hyphens + underscores, must start & end with
 // an alphanumeric character.
 
-const FABRIC_IQ_NAME_RE = /^[A-Za-z0-9]([A-Za-z0-9_-]{0,24}[A-Za-z0-9])?$/;
+const VALID_NAME_RE = /^[A-Za-z0-9]([A-Za-z0-9_-]{0,24}[A-Za-z0-9])?$/;
 
 export function isValidFabricIQName(name: string): boolean {
-  return FABRIC_IQ_NAME_RE.test(name);
+  return VALID_NAME_RE.test(name);
 }
 
 export function fabricIQNameError(kind: string, name: string): string | null {
@@ -31,7 +31,7 @@ export function fabricIQNameError(kind: string, name: string): string | null {
   if (name.length > 26) return `${kind} name "${name}" exceeds 26 characters.`;
   if (!/^[A-Za-z0-9]/.test(name)) return `${kind} name "${name}" must start with a letter or digit.`;
   if (!/[A-Za-z0-9]$/.test(name)) return `${kind} name "${name}" must end with a letter or digit.`;
-  if (!FABRIC_IQ_NAME_RE.test(name)) return `${kind} name "${name}" may only contain letters, digits, hyphens, and underscores.`;
+  if (!VALID_NAME_RE.test(name)) return `${kind} name "${name}" may only contain letters, digits, hyphens, and underscores.`;
   return null;
 }
 
@@ -80,7 +80,7 @@ export function validateOntology(ontology: Ontology): ValidationError[] {
     for (const p of e.properties) {
       if (p.isIdentifier && p.type !== 'string' && p.type !== 'integer') {
         errors.push({
-          message: `Identifier property "${p.name}" on "${label}" must be string or integer type for Fabric IQ compatibility.`,
+          message: `Identifier property "${p.name}" on "${label}" must be string or integer type for compatibility.`,
           entityId: e.id,
         });
       }
@@ -95,7 +95,7 @@ export function validateOntology(ontology: Ontology): ValidationError[] {
         const existing = propNameTypeMap.get(p.name);
         if (existing && existing.type !== p.type) {
           errors.push({
-            message: `Property "${p.name}" is defined as "${p.type}" in "${label}" but as "${existing.type}" in "${existing.entityName}". Fabric IQ requires the same type when property names match across entity types.`,
+            message: `Property "${p.name}" is defined as "${p.type}" in "${label}" but as "${existing.type}" in "${existing.entityName}". Ontology validation requires the same type when property names match across entity types.`,
             entityId: e.id,
           });
         } else if (!existing) {
@@ -134,7 +134,7 @@ export function validateOntology(ontology: Ontology): ValidationError[] {
     if (r.from && r.to && r.from === r.to) {
       const entityLabel = entityNameById.get(r.from) || r.from;
       errors.push({
-        message: `"${label}" is a self-referencing relationship on "${entityLabel}". Fabric IQ requires source and target entity types to be different.`,
+        message: `"${label}" is a self-referencing relationship on "${entityLabel}". Ontology validation requires source and target entity types to be different.`,
         relationshipId: r.id,
       });
     }

@@ -1,4 +1,4 @@
-// Cosmic Coffee Company - Sample Ontology for Microsoft Fabric IQ Demo
+// Cosmic Coffee Company - Sample Ontology
 
 export interface Property {
   name: string;

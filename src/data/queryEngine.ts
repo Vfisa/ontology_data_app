@@ -63,7 +63,7 @@ export function processQuery(query: string, ontology: Ontology): QueryResponse {
   if (normalizedQuery.includes('what is') && (normalizedQuery.includes('entity') || normalizedQuery.includes('ontology'))) {
     return {
       query,
-      result: "An **Entity Type** is a reusable logical model of a real-world concept (like Customer, Product, or Order). In the Fabric IQ Ontology, entity types standardize:\n\n• **Name & Description** - Common terminology\n• **Properties** - Attributes with types and units\n• **Identifier** - Unique key for each instance\n\nEntity types ensure everyone in your organization uses consistent definitions.",
+      result: "An **Entity Type** is a reusable logical model of a real-world concept (like Customer, Product, or Order). In an ontology, entity types standardize:\n\n• **Name & Description** - Common terminology\n• **Properties** - Attributes with types and units\n• **Identifier** - Unique key for each instance\n\nEntity types ensure everyone in your organization uses consistent definitions.",
       highlightEntities: entities.slice(0, 2).map(e => e.id),
       highlightRelationships: [],
       interpretation: "Detected: conceptual question about entity types"

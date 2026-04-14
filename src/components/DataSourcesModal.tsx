@@ -61,7 +61,7 @@ export function DataSourcesModal({ onClose }: DataSourcesModalProps) {
           <div>
             <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 4 }}>Microsoft OneLake</div>
             <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-              Unified data lake for Microsoft Fabric. The ontology binds entity types to tables and semantic models stored here.
+              Unified data lake. The ontology binds entity types to tables and semantic models stored here.
             </div>
           </div>
         </div>

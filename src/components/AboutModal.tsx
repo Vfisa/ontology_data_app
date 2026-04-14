@@ -32,19 +32,8 @@ export function AboutModal({ onClose }: AboutModalProps) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div className="feature-card" style={{ marginBottom: 0 }}>
             <p className="feature-text" style={{ margin: 0 }}>
-              Ontology Playground is a community learning and design experience for building RDF/OWL ontologies,
-              exploring graph relationships, and preparing models compatible with Microsoft Fabric IQ workflows.
-            </p>
-            <p className="feature-text" style={{ margin: '10px 0 0 0' }}>
-              Learn more about Microsoft Fabric IQ:{' '}
-              <a
-                className="about-link"
-                href="https://learn.microsoft.com/fabric/iq/overview"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                https://learn.microsoft.com/fabric/iq/overview
-              </a>
+              Ontology Playground is a community learning and design experience for building RDF/OWL ontologies
+              and exploring graph relationships.
             </p>
           </div>
 

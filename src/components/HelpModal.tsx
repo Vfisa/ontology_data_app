@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { X, MousePointer, Target, MessageSquare, Link2, Lightbulb, Command } from 'lucide-react';
+import { X, MousePointer, MessageSquare, Link2, Lightbulb, Command } from 'lucide-react';
 
 interface HelpModalProps {
   onClose: () => void;
@@ -43,17 +43,6 @@ export function HelpModal({ onClose }: HelpModalProps) {
 
           <div className="feature-card">
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-              <Target size={20} color="var(--ms-purple)" />
-              <span className="feature-title" style={{ marginBottom: 0 }}>Complete Quests</span>
-            </div>
-            <p className="feature-text">
-              Select a quest from the left panel to start a guided journey. Follow the instructions to click on specific entities 
-              or relationships. Complete all steps to earn <strong>badges</strong> and <strong>points</strong>!
-            </p>
-          </div>
-
-          <div className="feature-card">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
               <MessageSquare size={20} color="var(--ms-yellow)" />
               <span className="feature-title" style={{ marginBottom: 0 }}>Ask Natural Language Questions</span>
             </div>
@@ -84,9 +73,9 @@ export function HelpModal({ onClose }: HelpModalProps) {
           }}>
             <Lightbulb size={20} color="var(--ms-blue)" style={{ flexShrink: 0, marginTop: 2 }} />
             <div>
-              <strong style={{ color: 'var(--ms-blue)' }}>About Microsoft Fabric IQ Ontology</strong>
+              <strong style={{ color: 'var(--ms-blue)' }}>About Ontologies</strong>
               <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.5 }}>
-                An ontology is a shared, machine-understandable vocabulary of your business. It defines entity types (like Customer, Product), 
+                An ontology is a shared, machine-understandable vocabulary of your business. It defines entity types (like Customer, Product),
                 their properties, and relationships. This demo uses a fictional "Cosmic Coffee Company" to illustrate these concepts.
               </p>
             </div>

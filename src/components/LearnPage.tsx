@@ -112,7 +112,7 @@ function CourseCatalogue({ courses }: { courses: LearnCourse[] }) {
       <div className="learn-index-hero">
         <p>
           Learning paths and hands-on labs to help you understand and build
-          ontologies for Microsoft Fabric IQ.
+          ontologies.
         </p>
       </div>
       <div className="learn-card-grid">

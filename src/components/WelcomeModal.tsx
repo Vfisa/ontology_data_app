@@ -82,7 +82,7 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
           fontSize: 12, 
           color: 'var(--text-tertiary)' 
         }}>
-          Complete quests to earn badges and learn about Microsoft Fabric IQ Ontology
+          Explore and design RDF/OWL ontologies interactively
         </div>
       </motion.div>
     </motion.div>

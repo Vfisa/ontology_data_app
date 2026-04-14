@@ -1,9 +1,6 @@
 import { create } from 'zustand';
-import type { Quest } from '../data/quests';
-import { quests as defaultQuests } from '../data/quests';
 import type { Ontology, DataBinding } from '../data/ontology';
 import { cosmicCoffeeOntology, sampleBindings } from '../data/ontology';
-import { generateQuestsForOntology } from '../data/questGenerator';
 
 function getInitialDarkMode(): boolean {
   if (typeof window === 'undefined' || !('localStorage' in window)) {
@@ -30,15 +27,7 @@ interface AppState {
   highlightedRelationships: string[];
   showDataBindings: boolean;
   darkMode: boolean;
-  
-  // Quest State
-  availableQuests: Quest[];
-  activeQuest: Quest | null;
-  currentStepIndex: number;
-  completedQuests: string[];
-  earnedBadges: { badge: string; icon: string }[];
-  totalPoints: number;
-  
+
   // Query State
   queryInput: string;
   queryResult: string | null;
@@ -55,13 +44,7 @@ interface AppState {
   setHighlightedRelationships: (ids: string[]) => void;
   toggleDataBindings: () => void;
   toggleDarkMode: () => void;
-  
-  // Quest Actions
-  startQuest: (questId: string) => void;
-  advanceQuestStep: () => void;
-  completeQuest: () => void;
-  abandonQuest: () => void;
-  
+
   // Query Actions
   setQueryInput: (input: string) => void;
   setQueryResult: (result: string | null) => void;
@@ -80,23 +63,13 @@ export const useAppStore = create<AppState>((set, get) => ({
   highlightedRelationships: [],
   showDataBindings: false,
   darkMode: getInitialDarkMode(),
-  
-  // Initial Quest State - use default quests for Cosmic Coffee
-  availableQuests: defaultQuests,
-  activeQuest: null,
-  currentStepIndex: 0,
-  completedQuests: [],
-  earnedBadges: [],
-  totalPoints: 0,
-  
+
   // Initial Query State
   queryInput: '',
   queryResult: null,
   
   // Ontology Actions
   loadOntology: (ontology, bindings = []) => {
-    // Generate new quests based on the loaded ontology
-    const newQuests = generateQuestsForOntology(ontology);
     set({
       currentOntology: ontology,
       dataBindings: bindings,
@@ -104,11 +77,6 @@ export const useAppStore = create<AppState>((set, get) => ({
       selectedRelationshipId: null,
       highlightedEntities: [],
       highlightedRelationships: [],
-      activeQuest: null,
-      currentStepIndex: 0,
-      availableQuests: newQuests,
-      // Reset completed quests when loading a new ontology
-      completedQuests: []
     });
   },
   
@@ -119,10 +87,6 @@ export const useAppStore = create<AppState>((set, get) => ({
     selectedRelationshipId: null,
     highlightedEntities: [],
     highlightedRelationships: [],
-    availableQuests: defaultQuests,
-    activeQuest: null,
-    currentStepIndex: 0,
-    completedQuests: []
   }),
   
   exportOntology: () => {
@@ -153,55 +117,6 @@ export const useAppStore = create<AppState>((set, get) => ({
       // Ignore persistence errors; still update in-memory state
     }
     return { darkMode: next };
-  }),
-  
-  // Quest Actions
-  startQuest: (questId) => {
-    const { availableQuests } = get();
-    const quest = availableQuests.find(q => q.id === questId);
-    if (quest) {
-      set({ 
-        activeQuest: quest, 
-        currentStepIndex: 0,
-        highlightedEntities: [],
-        highlightedRelationships: [],
-        selectedEntityId: null,
-        selectedRelationshipId: null
-      });
-    }
-  },
-  
-  advanceQuestStep: () => {
-    const { activeQuest, currentStepIndex } = get();
-    if (activeQuest && currentStepIndex < activeQuest.steps.length - 1) {
-      set({ currentStepIndex: currentStepIndex + 1 });
-    } else if (activeQuest) {
-      // Last step completed, complete the quest
-      get().completeQuest();
-    }
-  },
-  
-  completeQuest: () => {
-    const { activeQuest, completedQuests, earnedBadges, totalPoints } = get();
-    if (activeQuest && !completedQuests.includes(activeQuest.id)) {
-      set({
-        completedQuests: [...completedQuests, activeQuest.id],
-        earnedBadges: [...earnedBadges, { 
-          badge: activeQuest.reward.badge, 
-          icon: activeQuest.reward.badgeIcon 
-        }],
-        totalPoints: totalPoints + activeQuest.reward.points,
-        activeQuest: null,
-        currentStepIndex: 0
-      });
-    }
-  },
-  
-  abandonQuest: () => set({ 
-    activeQuest: null, 
-    currentStepIndex: 0,
-    highlightedEntities: [],
-    highlightedRelationships: []
   }),
   
   // Query Actions
